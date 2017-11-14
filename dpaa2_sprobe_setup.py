@@ -525,6 +525,33 @@ class DPRC(DPAA2_Obj):
 
 
 def sprobe_dmux(root):
+    "8mpkts - sum, problem with driver of dpdmux"
+    dprc = root.createDPRC()
+    mcp = dprc.createDPMCP()
+    for _ in range(16):
+        dprc.createDPIO()
+
+    for _ in range(16):
+        dprc.createDPBP()
+
+    PORTS = [1, 2] #, 3, 4]
+
+    dmux = dprc.createDPDMUX(len(PORTS))
+    for i, portId in enumerate(PORTS):
+        mac = dprc.createDPMAC(portId)
+        root.connect(dmux[i + 1], mac)
+
+    ni = DPNI(dprc)
+    ni.num_tcs = 8
+    ni.num_queues = 8
+    ni.create()
+    # ni.setMAC("00:00:00:00:00:0%d" % 1)
+    root.connect(ni, dmux[0])
+    return dprc
+
+
+def sprobe_direct(root):
+    "14mpkts/100%"
     dprc = root.createDPRC()
     mcp = dprc.createDPMCP()
     for _ in range(16):
@@ -535,21 +562,22 @@ def sprobe_dmux(root):
 
     PORTS = [1, 2, 3, 4]
 
-    dmux = root.createDPDMUX(len(PORTS))
     for i, portId in enumerate(PORTS):
         mac = dprc.createDPMAC(portId)
-        root.connect(dmux[i + 1], mac)
+        ni = DPNI(dprc)
+        ni.num_tcs = 2
+        ni.num_queues = 2
+        ni.create()
+        root.connect(ni, mac)
 
-    ni = DPNI(dprc)
-    ni.num_tcs = 4
-    ni.num_queues = 4
-    ni.create()
-    ni.setMAC("00:00:00:00:00:0%d" % 1)
-    root.connect(ni, dmux[0])
+    # ni.setMAC("00:00:00:00:00:0%d" % 1)
+    #root.connect(ni, dmux[0])
     return dprc
 
 
+
 def sprobe_sw(root):
+    "2mpkts - sum, problem with driver of dpsw"
     dprc = root.createDPRC()
     mcp = dprc.createDPMCP()
     for _ in range(16):
@@ -564,7 +592,7 @@ def sprobe_sw(root):
     for _ in range(32):
         dprc.createDPCON()
 
-    sw = root.createDPSW(len(PORTS) + NI_CNT)
+    sw = dprc.createDPSW(len(PORTS) + NI_CNT)
     for i, portId in enumerate(PORTS):
         mac = dprc.createDPMAC(portId)
         root.connect(sw[i], mac)
@@ -586,8 +614,9 @@ if __name__ == "__main__":
     for dprc in root.children:
         dprc.destroy()
 
-    # dprc = sprobe_sw(root)
+    #dprc = sprobe_sw(root)
     dprc = sprobe_dmux(root)
+    #dprc = sprobe_direct(root)
 
     with open("/sys/bus/fsl-mc/devices/" + dprc.name + "/driver_override", "w") as f:
         f.write("vfio-fsl-mc\n")
