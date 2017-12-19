@@ -615,8 +615,8 @@ if __name__ == "__main__":
         dprc.destroy()
 
     #dprc = sprobe_sw(root)
-    dprc = sprobe_dmux(root)
-    #dprc = sprobe_direct(root)
+    #dprc = sprobe_dmux(root)
+    dprc = sprobe_direct(root)
 
     with open("/sys/bus/fsl-mc/devices/" + dprc.name + "/driver_override", "w") as f:
         f.write("vfio-fsl-mc\n")

@@ -1,0 +1,8 @@
+LS2085_88ARDBE.pdf, p 19, board can not boot from sd
+https://www.nxp.com/video/how-to-set-up-codewarrior-pa10:HOW-TO-RUN-CODEWARRIOR-PA10
+https://community.nxp.com/message/823993 (Custom LS2088A hardware DDR4 bring up, asks about CW)
+https://community.nxp.com/thread/464311 (2088a rcw)
+https://community.nxp.com/thread/464363 (SATA can't work on LS2088ARDB+LSDK1709)
+https://community.nxp.com/thread/463040 (LS2088A QSPI flash corrupting)
+https://community.nxp.com/thread/462317 (Correct way to install  QoriQ SDK2.0-1703)
+https://community.nxp.com/thread/460996 (Core Frequency of LS2088A)

@@ -1,0 +1,105 @@
+~# restool --help 
+OVERVIEW
+
+  For general help info:
+    restool --help
+
+  To see the commands each object suppports:
+    restool <object-type> help
+
+  For object type and command-specific help:
+    restool <object-type> <command> --help
+
+SYNOPSIS
+
+  restool [<global-opts>] <object-type> <command> <object-name> [ARGS...]
+
+OPTIONS
+
+  Valid <global-opts> are:
+   -v,--version     Displays tool version info
+   -m,--mc-version  Displays mc firmware version
+   -h,-?,--help     Displays general help info
+   -s, --script     Display script friendly output
+   --root=[dprc]    Specifies root container name
+
+  Valid <object-type> values: <dprc|dpni|dpio|dpsw|dpbp|dpci|dpcon|dpseci|dpdmux|
+                               dpmcp|dpmac|dpdcei|dpaiop|dprtc|dpdmai>
+
+  Valid commands vary for each object type.
+  Most objects support the following commands:
+    help
+    info
+    create
+    destroy
+
+  <object-name> is a string containing object type and ID (e.g. dpni.7)
+
+
+
+~# restool dprc help
+
+Usage: restool dprc <command> [--help] [ARGS...]
+Where <command> can be:
+   sync         - synchronize the objects in MC with MC bus.
+   list         - lists all containers (DPRC objects) in the system.
+   show         - displays the object contents of a DPRC object.
+   info         - displays detailed information about a DPRC object.
+   create       - creates a new child DPRC under the specified parent.
+   destroy      - destroys a child DPRC under the specified parent.
+   assign       - moves an object from a parent container to a child container.
+                  change an object's plugged state
+   unassign     - moves an object from a child container to a parent container.
+   set-label    - sets label/alias for any objects except root container.
+   connect      - connects 2 objects, creating a link between them.
+   disconnect   - removes the link between two objects. Either endpoint can
+		   be specified as the target of the operation.
+   generate-dpl - generate DPL syntax for the specified container
+
+For command-specific help, use the --help option of each command.
+
+
+
+~# restool dpni help
+
+Usage: restool dpni <command> [--help] [ARGS...]
+Where <command> can be:
+   info - displays detailed information about a DPNI object.
+   create - creates a new child DPNI under the root DPRC.
+   destroy - destroys a child DPNI under the root DPRC.
+   update - update attributes of already created DPNI. 
+
+For command-specific help, use the --help option of each command.
+
+
+
+~# restool dpio help
+
+Usage: restool dpio <command> [--help] [ARGS...]
+Where <command> can be:
+   info - displays detailed information about a DPIO object.
+   create - creates a new child DPIO under the root DPRC.
+   destroy - destroys a child DPIO under the root DPRC.
+
+For command-specific help, use the --help option of each command.
+
+
+
+~# restool dpsw help
+
+Usage: restool dpsw <command> [--help] [ARGS...]
+Where <command> can be:
+   info - displays detailed information about a DPSW object.
+   create - creates a new child DPSW under the root DPRC.
+   destroy - destroys a child DPSW under the root DPRC.
+
+For command-specific help, use the --help option of each command.
+
+
+
+.....
+
+full names of dpaa shortcuts:
+QorIQ-SDK-v2.0-1703-IC-Rev0.pdf p.422
+
+
